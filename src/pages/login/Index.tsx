@@ -1,9 +1,12 @@
 import { Button, TextField } from '@material-ui/core'
 import React, { FC } from 'react'
+import { useAppDispatch } from '../../hooks'
+import { login } from '../../slices/user/userSlice'
 import { useStyles } from './styles'
 
 export const Login: FC = () => {
   const classes = useStyles()
+  const dispatch = useAppDispatch()
 
   return (
     <div className={classes.layout}>
@@ -26,6 +29,7 @@ export const Login: FC = () => {
           color="primary"
           className={classes.marginTop}
           fullWidth
+          onClick={() => dispatch(login({ email: 'a@a', password: 'ppp'}))}
         >
           Login
         </Button>
