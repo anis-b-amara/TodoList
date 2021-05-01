@@ -5,7 +5,9 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    restart: always
+    restart: unless-stopped
+    volumes: 
+      - "./:/usr/src/app"
     ports: 
       - 3000:3000
       - 9339:9339
