@@ -1,32 +1,33 @@
-import React, { FC, useState } from 'react'
 import {
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  Switch,
   TextField,
 } from '@material-ui/core'
-import { useStyles } from './styles'
-import { useAppDispatch } from '../../hooks'
-import { add } from '../../slices/todos/todosSlice'
+import { FC, useState } from 'react'
 import { useForm, Controller } from 'react-hook-form'
+import { useAppDispatch, useAppSelector } from '../../hooks'
 import { Todo } from '../../interfaces/Todo'
-import { v4 as uuid } from 'uuid'
+import { selectTodo, update } from '../../slices/todos/todosSlice'
+import { useStyles } from '../create-todo/styles'
 
-export const CreateTodo: FC = () => {
+interface Props {
+  todoId: string
+}
+const UpdateTodo: FC<Props> = ({ todoId }) => {
   const {
     control,
     handleSubmit,
-    reset,
     formState: { isValid },
-  } = useForm({
-    mode: 'all',
-    defaultValues: { title: '', content: '' },
-  })
-  const classes = useStyles()
+  } = useForm({ mode: 'all' })
+  const todo = useAppSelector(selectTodo(todoId))
   const dispatch = useAppDispatch()
+
   const [open, setOpen] = useState(false)
+  const classes = useStyles()
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -37,22 +38,14 @@ export const CreateTodo: FC = () => {
   }
 
   const onSubmit = (data: Todo) => {
-    const todo: Todo = { ...data, id: uuid(), status: false }
-    dispatch(add(todo))
-    reset()
+    dispatch(update({ ...todo, ...data }))
     handleClose()
   }
 
   return (
     <div>
-      <Button
-        variant='contained'
-        size='medium'
-        color='primary'
-        className='button'
-        onClick={handleClickOpen}
-      >
-        CREATE A NEW TASK
+      <Button size='medium' onClick={handleClickOpen}>
+        Update
       </Button>
       <Dialog
         open={open}
@@ -61,18 +54,19 @@ export const CreateTodo: FC = () => {
         aria-describedby='alert-dialog-description'
         classes={{ paper: classes.paper }}
       >
-        <DialogTitle id='alert-dialog-title'>Add New Task</DialogTitle>
+        <DialogTitle id='alert-dialog-title'>Update Task</DialogTitle>
         <form onSubmit={handleSubmit(onSubmit)}>
           <DialogContent>
             <div>
               <Controller
                 name='title'
                 control={control}
+                defaultValue={todo?.title}
                 rules={{ required: true }}
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    value={field.value}
+                    id='standard-basic'
                     label='Task name'
                     fullWidth
                     variant='outlined'
@@ -84,17 +78,34 @@ export const CreateTodo: FC = () => {
             <div>
               <Controller
                 name='content'
+                defaultValue={todo?.content}
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    value={field.value}
+                    id='standard-basic'
                     label='Content'
                     fullWidth
-                    variant='outlined'
                     className={classes.marginTop}
+                    variant='outlined'
                     required
+                  />
+                )}
+              />
+            </div>
+            <div>
+              <Controller
+                name='status'
+                defaultValue={todo?.status}
+                control={control}
+                render={({ field }) => (
+                  <Switch
+                    {...field}
+                    checked={field.value}
+                    color='primary'
+                    name='checkedB'
+                    inputProps={{ 'aria-label': 'primary checkbox' }}
                   />
                 )}
               />
@@ -105,13 +116,13 @@ export const CreateTodo: FC = () => {
               CANCEL
             </Button>
             <Button
-              type='submit'
-              disabled={!isValid}
               color='primary'
               variant='contained'
+              disabled={!isValid}
               autoFocus
+              type='submit'
             >
-              CREATE
+              UPDATE
             </Button>
           </DialogActions>
         </form>
@@ -119,3 +130,5 @@ export const CreateTodo: FC = () => {
     </div>
   )
 }
+
+export default UpdateTodo

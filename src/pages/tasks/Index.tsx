@@ -1,19 +1,14 @@
 import { FC } from 'react'
 import { Grid } from '@material-ui/core'
-import { CreateTodo, Todo } from '../../components/Index'
+import { CreateTodo, TodoItem } from '../../components/Index'
 import { useStyles } from './styles'
 import { useAppSelector } from '../../hooks'
 import { selectTodos } from '../../slices/todos/todosSlice'
+import { Todo } from '../../interfaces/Todo'
 
-export interface TodoItem {
-  id: number
-  title: string
-  content: string
-  status: boolean
-}
 export const Tasks: FC = () => {
   const classes = useStyles()
-  const todos = useAppSelector(selectTodos)
+  const todos: Todo[] = useAppSelector(selectTodos)
   return (
     <Grid container direction='column'>
       <Grid container direction='column'>
@@ -23,8 +18,8 @@ export const Tasks: FC = () => {
       </Grid>
       <CreateTodo />
       <div className={classes.content}>
-        {todos.map((todo: TodoItem) => (
-          <Todo key={todo.id} todo={todo} />
+        {todos.map((todo: Todo) => (
+          <TodoItem key={todo.id} todo={todo} />
         ))}
       </div>
     </Grid>

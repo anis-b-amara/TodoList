@@ -1,15 +1,17 @@
 import { Chip } from '@material-ui/core'
 import React, { FC } from 'react'
-import { TodoItem } from '../../pages/tasks/Index'
+import { Todo } from '../../interfaces/Todo'
+import RemoveTodo from '../remove-todo/Index'
+import UpdateTodo from '../update-todo/Index'
 import { useStyles } from './styles'
 
 type Props = {
-  todo: TodoItem
+  todo: Todo
 }
 
-export const Todo: FC<Props> = ({ todo }) => {
+export const TodoItem: FC<Props> = ({ todo }) => {
   const classes = useStyles()
-  const { title, content, status } = todo
+  const { title, content, status, id } = todo
 
   return (
     <>
@@ -22,6 +24,8 @@ export const Todo: FC<Props> = ({ todo }) => {
           ) : (
             <Chip label=' Not Completed' color='secondary' />
           )}
+          <UpdateTodo todoId={id} />
+          <RemoveTodo todoId={id} />
         </div>
       </div>
     </>

@@ -5,7 +5,7 @@ import { RootState } from '../../store'
 const initialState: User = {
   email: '',
   password: '',
-} as User
+}
 
 export const userSlice = createSlice({
   name: 'user',
