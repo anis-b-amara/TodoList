@@ -33,7 +33,7 @@ const RemoveTodo: FC<Props> = ({ todoId }) => {
 
   return (
     <div>
-      <Button size='medium' className='button' onClick={handleClickOpen}>
+      <Button size='medium' className='button' color='secondary' onClick={handleClickOpen}>
         Delete
       </Button>
       <Dialog
