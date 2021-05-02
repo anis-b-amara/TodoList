@@ -16,12 +16,14 @@ const schema = yup.object().shape({
 })
 
 export const Login: FC = () => {
+  const user = useAppSelector(selectUser)
+  const [isUserConnceted, setIsUserConnected] = useState(() => {
+    return !!user.password && !!user.email
+  })
   const history = useHistory()
   const classes = useStyles()
   const dispatch = useAppDispatch()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const user = useAppSelector(selectUser)
-  console.log(user)
 
   const {
     control,
@@ -34,17 +36,14 @@ export const Login: FC = () => {
       dispatch(login(data))
       setIsAuthenticated(true)
       localStorage.setItem('user', JSON.stringify(data))
+      setIsUserConnected(true)
       return history.push('/')
     }
   }
 
-  const isUserConnected = (user: User): boolean => {
-    return !!user.password && !!user.email
-  }
-
   return (
     <>
-      {isUserConnected(user) ? (
+      {isUserConnceted ? (
         <Redirect to='/' />
       ) : (
         <div className={classes.layout}>

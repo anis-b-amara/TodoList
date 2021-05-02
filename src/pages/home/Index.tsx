@@ -1,10 +1,21 @@
 import { AppBar, Button, Grid, Toolbar } from '@material-ui/core'
 import React, { FC } from 'react'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import { logout } from '../../slices/user/userSlice'
 import { Tasks } from '../tasks/Index'
 import { useStyles } from './styles'
 
 export const Home: FC = () => {
   const classes = useStyles()
+  const history = useHistory()
+  const dispatch = useDispatch()
+
+  const signout = () => {
+    localStorage.removeItem('user')
+    dispatch(logout())
+    return history.push('/login')
+  }
 
   return (
     <Grid container direction='column' className={classes.layout}>
@@ -17,7 +28,7 @@ export const Home: FC = () => {
             alignItems='center'
           >
             <h1>TODO APP</h1>
-            <Button color='inherit'>Logout</Button>
+            <Button color='inherit' onClick={signout}>Logout</Button>
           </Grid>
         </Toolbar>
       </AppBar>
