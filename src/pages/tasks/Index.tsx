@@ -15,8 +15,8 @@ export const Tasks: FC = () => {
   const classes = useStyles()
   const todos = useAppSelector(selectTodos)
   return (
-    <Grid container direction="column">
-      <Grid container direction="column">
+    <Grid container direction='column'>
+      <Grid container direction='column'>
         <h2 className={classes.headline}>
           Welcome User, keep up with your tasks
         </h2>

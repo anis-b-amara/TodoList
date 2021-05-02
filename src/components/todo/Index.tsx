@@ -18,9 +18,9 @@ export const Todo: FC<Props> = ({ todo }) => {
         <div className={classes.todoText}>{content}</div>
         <div className={`${classes.flexRow} ${classes.todoActions}`}>
           {status ? (
-            <Chip label="Completed" className={classes.chipMain} />
+            <Chip label='Completed' className={classes.chipMain} />
           ) : (
-            <Chip label=" Not Completed" color="secondary" />
+            <Chip label=' Not Completed' color='secondary' />
           )}
         </div>
       </div>

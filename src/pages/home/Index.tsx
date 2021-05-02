@@ -7,17 +7,17 @@ export const Home: FC = () => {
   const classes = useStyles()
 
   return (
-    <Grid container direction="column" className={classes.layout}>
-      <AppBar position="static">
+    <Grid container direction='column' className={classes.layout}>
+      <AppBar position='static'>
         <Toolbar>
           <Grid
             container
-            direction="row"
-            justify="space-between"
-            alignItems="center"
+            direction='row'
+            justify='space-between'
+            alignItems='center'
           >
             <h1>TODO APP</h1>
-            <Button color="inherit">Logout</Button>
+            <Button color='inherit'>Logout</Button>
           </Grid>
         </Toolbar>
       </AppBar>

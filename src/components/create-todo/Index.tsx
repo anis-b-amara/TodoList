@@ -27,10 +27,10 @@ export const CreateTodo: FC = () => {
   return (
     <div>
       <Button
-        variant="contained"
-        size="medium"
-        color="primary"
-        className="button"
+        variant='contained'
+        size='medium'
+        color='primary'
+        className='button'
         onClick={handleClickOpen}
       >
         CREATE A NEW TASK
@@ -38,15 +38,15 @@ export const CreateTodo: FC = () => {
       <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        aria-labelledby='alert-dialog-title'
+        aria-describedby='alert-dialog-description'
         classes={{ paper: classes.paper }}
       >
-        <DialogTitle id="alert-dialog-title">Add New Task</DialogTitle>
+        <DialogTitle id='alert-dialog-title'>Add New Task</DialogTitle>
         <DialogContent>
           <div>
             <TextField
-              label="Task name"
+              label='Task name'
               fullWidth
               value={''}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -56,7 +56,7 @@ export const CreateTodo: FC = () => {
           </div>
           <div>
             <TextField
-              label="Content"
+              label='Content'
               fullWidth
               value={''}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -66,7 +66,7 @@ export const CreateTodo: FC = () => {
           </div>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color='primary'>
             CANCEL
           </Button>
           <Button
@@ -80,8 +80,8 @@ export const CreateTodo: FC = () => {
                 })
               )
             }
-            color="primary"
-            variant="contained"
+            color='primary'
+            variant='contained'
             autoFocus
           >
             CREATE
