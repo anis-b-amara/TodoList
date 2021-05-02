@@ -1,5 +1,5 @@
+import React, { FC, useState } from 'react'
 import { Button, TextField } from '@material-ui/core'
-import React, { FC } from 'react'
 import { useAppDispatch } from '../../hooks'
 import { login } from '../../slices/user/userSlice'
 import { useStyles } from './styles'
@@ -7,6 +7,7 @@ import { useForm, Controller } from 'react-hook-form'
 import { User } from '../../interfaces/User'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { auth } from '../../auth/Index'
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -16,15 +17,24 @@ const schema = yup.object().shape({
 export const Login: FC = () => {
   const classes = useStyles()
   const dispatch = useAppDispatch()
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
   const {
     control,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors, isValid, isSubmitted },
   } = useForm<User>({ resolver: yupResolver(schema), mode: 'all' })
 
   const onSubmit = (data: User) => {
-    dispatch(login(data))
+    if (auth(data)) {
+      dispatch(login(data))
+      setIsAuthenticated(true)
+      localStorage.setItem('user', JSON.stringify(data))
+      return
+    }
+
+    setIsAuthenticated(false)
+    
   }
   return (
     <div className={classes.layout}>
@@ -42,6 +52,7 @@ export const Login: FC = () => {
               label="Email"
               className={classes.textField}
               variant="outlined"
+              required
             />
           )}
         />
@@ -58,6 +69,7 @@ export const Login: FC = () => {
               label="Password"
               className={`${classes.textField} ${classes.marginTop}`}
               variant="outlined"
+              required
             />
           )}
         />
@@ -74,6 +86,7 @@ export const Login: FC = () => {
         >
           Login
         </Button>
+        { isSubmitted && !isAuthenticated && <div className={classes.errorMessage}>User Does not exist</div>}
       </form>
     </div>
   )
