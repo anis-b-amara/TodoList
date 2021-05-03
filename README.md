@@ -33,3 +33,7 @@ or if you have docker and docker-compose installed in your machine and run the f
 ```ssh
 make run
 ```
+
+## Run
+
+Open the navigator and type the following URL [http://localhost:3000](http://localhost:3000)
