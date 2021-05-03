@@ -1,8 +1,9 @@
 import React, { ReactNode } from 'react'
 import { Redirect, Route } from 'react-router-dom'
+import { getUserFromLocalStorage } from '../services/LocalStorage'
 
 interface Props {
-  children: ReactNode,
+  children: ReactNode
   path: string
   exact: boolean
 }
@@ -12,9 +13,8 @@ const PrivateRoute = ({ children, ...rest }: Props) => {
       {...rest}
       exact
       render={() => {
-        const userStorage = localStorage.getItem('user')
-        const userInfo = userStorage && JSON.parse(userStorage)
-        
+        const userInfo = getUserFromLocalStorage()
+
         return !!userInfo ? children : <Redirect to='/login' />
       }}
     ></Route>

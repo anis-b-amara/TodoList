@@ -5,10 +5,12 @@ import { useStyles } from './styles'
 import { useAppSelector } from '../../hooks'
 import { selectTodos } from '../../slices/todos/todosSlice'
 import { Todo } from '../../interfaces/Todo'
+import { setTodosToLocalstorage } from '../../services/LocalStorage'
 
 export const Tasks: FC = () => {
   const classes = useStyles()
   const todos: Todo[] = useAppSelector(selectTodos)
+  setTodosToLocalstorage(todos)
   return (
     <Grid container direction='column'>
       <Grid container direction='column'>

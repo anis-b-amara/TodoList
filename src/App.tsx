@@ -3,7 +3,7 @@ import './App.css'
 import { Route, Switch } from 'react-router-dom'
 import { Home, Login } from './pages/Index'
 import PrivateRoute from './routes/PrivateRoute'
-import { getUserFromLocalStorage } from './auth/Index'
+import { getUserFromLocalStorage } from './services/LocalStorage'
 import { useAppDispatch } from './hooks'
 import { login } from './slices/user/userSlice'
 

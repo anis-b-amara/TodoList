@@ -7,8 +7,9 @@ import { useForm, Controller } from 'react-hook-form'
 import { User } from '../../interfaces/User'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { auth } from '../../auth/Index'
+import { isAuth } from '../../services/Auth'
 import { Redirect, useHistory } from 'react-router-dom'
+import { setUserToLocalStorage } from '../../services/LocalStorage'
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
@@ -32,10 +33,10 @@ export const Login: FC = () => {
   } = useForm<User>({ resolver: yupResolver(schema), mode: 'all' })
 
   const onSubmit = (data: User) => {
-    if (auth(data)) {
+    if (isAuth(data)) {
       dispatch(login(data))
       setIsAuthenticated(true)
-      localStorage.setItem('user', JSON.stringify(data))
+      setUserToLocalStorage(data)
       setIsUserConnected(true)
       return history.push('/')
     }
